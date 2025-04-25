@@ -45,7 +45,7 @@ const userSchema = new mongoose_1.Schema({
 const contentTypes = ['image', 'video', 'article', 'audio'];
 const contentSchema = new mongoose_1.Schema({
     link: { type: String, required: true },
-    type: { type: String, enum: contentTypes, required: true },
+    type: { type: String, enum: contentTypes },
     title: { type: String, required: true },
     tags: [{ type: mongoose_1.Types.ObjectId, ref: 'Tag' }],
     userId: { type: mongoose_1.Types.ObjectId, ref: 'User', required: true },

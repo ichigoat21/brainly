@@ -3,6 +3,7 @@ import models from "./server"
 import jwt from "jsonwebtoken";
 import { JWT_PASS } from "./config";
 import { CustomRequest } from "./interface";
+import { userMiddleware } from "./middleware";
 const app = express();
 
 app.use(express.json());
@@ -20,7 +21,7 @@ app.post("/api/v1/signup", async (req: Request, res: Response) => {
      })
 })
 
-app.get("/api/v1/signin", async (req: Request, res: Response) => {
+app.post("/api/v1/signin", async (req: Request, res: Response) => {
     const username = req.body.username;
     const password = req.body.password;
 
@@ -42,7 +43,7 @@ app.get("/api/v1/signin", async (req: Request, res: Response) => {
     }
 })
 
-app.post("/api/v1/contents", async (req: CustomRequest, res: Response) => {
+app.post("/api/v1/contents", userMiddleware, async (req: CustomRequest, res: Response) => {
     const link = req.body.link;
     const title = req.body.title;
 
@@ -56,7 +57,7 @@ app.post("/api/v1/contents", async (req: CustomRequest, res: Response) => {
         "message" : "content added"
     })
 })
-app.get("/api/v1/contents", async (req:  CustomRequest, res: Response) => {
+app.get("/api/v1/contents", userMiddleware, async (req:  CustomRequest, res: Response) => {
     const userId = req.userId;
     const content = await models.contentModel.find({
         userId : userId
@@ -67,7 +68,7 @@ app.get("/api/v1/contents", async (req:  CustomRequest, res: Response) => {
 })
 
 
-app.post("/api/v1/delete", async (req: CustomRequest, res: Response) => {
+app.post("/api/v1/delete", userMiddleware, async (req: CustomRequest, res: Response) => {
     const contentId = req.body.contentId;
 
     await models.contentModel.deleteMany({
@@ -76,10 +77,26 @@ app.post("/api/v1/delete", async (req: CustomRequest, res: Response) => {
     })
 })
 
-app.post("/api/v1/share", (req: Request, res: Response) => {
-    res.json({
-     message: "share endpoint"
-    })
+app.post("/api/v1/share", async (req: CustomRequest, res: Response) => {
+     const contentId = req.params.id;
+     try {
+        const content = await models.contentModel.findById({
+            contentId
+        })
+        if (!content) {
+            res.status(403).json({
+                "message" : "incorrect id"
+            })
+        }
+        res.json({
+            message : "heres your shareable link",
+            shareLink: `https://myapp.com/share/${contentId}`,
+            title: content?.title,
+            type: content?.type
+        })
+     } catch {
+        res.status(500).json({ message: "something went wrong" });
+     }
 })
 
 app.listen(3000, () => {console.log("server started")});

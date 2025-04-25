@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const server_1 = __importDefault(require("./server"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = require("./config");
+const middleware_1 = require("./middleware");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -29,7 +30,7 @@ app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, funct
         message: "you are signed in"
     });
 }));
-app.get("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const username = req.body.username;
     const password = req.body.password;
     const existingUser = yield server_1.default.userModel.findOne({
@@ -50,7 +51,7 @@ app.get("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, functi
         });
     }
 }));
-app.post("/api/v1/contents", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/api/v1/contents", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const link = req.body.link;
     const title = req.body.title;
     const content = yield server_1.default.contentModel.create({
@@ -63,7 +64,7 @@ app.post("/api/v1/contents", (req, res) => __awaiter(void 0, void 0, void 0, fun
         "message": "content added"
     });
 }));
-app.get("/api/v1/contents", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/api/v1/contents", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.userId;
     const content = yield server_1.default.contentModel.find({
         userId: userId
@@ -72,16 +73,33 @@ app.get("/api/v1/contents", (req, res) => __awaiter(void 0, void 0, void 0, func
         content
     });
 }));
-app.post("/api/v1/delete", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/api/v1/delete", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const contentId = req.body.contentId;
     yield server_1.default.contentModel.deleteMany({
         contentId,
         userId: req.userId
     });
 }));
-app.post("/api/v1/share", (req, res) => {
-    res.json({
-        message: "share endpoint"
-    });
-});
+app.post("/api/v1/share", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const contentId = req.params.id;
+    try {
+        const content = yield server_1.default.contentModel.findById({
+            contentId
+        });
+        if (!content) {
+            res.status(403).json({
+                "message": "incorrect id"
+            });
+        }
+        res.json({
+            message: "heres your shareable link",
+            shareLink: `https://myapp.com/share/${contentId}`,
+            title: content === null || content === void 0 ? void 0 : content.title,
+            type: content === null || content === void 0 ? void 0 : content.type
+        });
+    }
+    catch (_a) {
+        res.status(500).json({ message: "something went wrong" });
+    }
+}));
 app.listen(3000, () => { console.log("server started"); });
