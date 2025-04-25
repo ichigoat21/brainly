@@ -25,4 +25,4 @@ const contentSchema = new Schema({
 const contentModel = mongoose.model("content", contentSchema)
 const userModel = mongoose.model("user", userSchema);
 
-export default {userModel, contentModel};
+export default {userModel, contentModel}; 
