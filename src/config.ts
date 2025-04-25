@@ -1,1 +1,0 @@
-export const JWT_PASS = "232332";
