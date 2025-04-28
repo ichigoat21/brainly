@@ -15,14 +15,18 @@ const  variantStyles = {
     "primary" : "bg-[#e1e7fe] text-[#4038ae]",
     "secondary" : "bg-[#5046e4] text-[#eef3ff]"
 }
-const defaultStyles = "rounded-xl cursor-pointer"
+const defaultStyles = "rounded-md cursor-pointer"
 const sizeStyles = {
-    "sm" : "p-2",
-    "md" : "p-4",
-    "lg" : "px-8 py-4"
+    "sm" : "px-2 py-1 text-sm",
+    "md" : "px-4 py-2 text-md",
+    "lg" : "px-8 py-4 text-lg"
 }
 export const Button = (props : ButtonProps) => { <Button size="md" variant="secondary" text="add"/>
-    return <button className={`flex ${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]}`}>
-     {props.startIcon} {props.text} {props.endIcon}
+    return <button className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]}`}>
+        <div className="flex items-center">
+          {props.startIcon}
+          {props.text}
+          {props.endIcon}
+        </div>
     </button>
 }
