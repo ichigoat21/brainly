@@ -1,4 +1,10 @@
+import { Button } from "./components/button"
+
 const App = () => {
-  return <div className="bg-blue-200">hello!</div>
+  return <div>
+    <Button size="sm" variant="primary" text="share"/>
+    <Button size="md" variant="secondary" text="add"/>
+    <Button size="lg" variant="secondary" text="add"/>
+  </div>
 }
 export default App
