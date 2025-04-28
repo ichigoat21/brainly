@@ -21,8 +21,8 @@ const sizeStyles = {
     "md" : "p-4",
     "lg" : "px-8 py-4"
 }
-export const Button = (props : ButtonProps) => {
-    return <button className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]}`}>
-      {props.text}
+export const Button = (props : ButtonProps) => { <Button size="md" variant="secondary" text="add"/>
+    return <button className={`flex ${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]}`}>
+     {props.startIcon} {props.text} {props.endIcon}
     </button>
 }
