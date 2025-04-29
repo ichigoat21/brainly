@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { JWT_PASS } from "./config";
 import { CustomRequest } from "./interface";
 import { userMiddleware } from "./middleware";
+import { random } from "./utils";
 const app = express();
 
 app.use(express.json());
@@ -78,25 +79,43 @@ app.post("/api/v1/delete", userMiddleware, async (req: CustomRequest, res: Respo
 })
 
 app.get("/api/v1/share", async (req: CustomRequest, res: Response) => {
-     const contentId = req.params.id;
-     try {
-        const content = await models.contentModel.findById({
-            contentId
-        })
-        if (!content) {
-            res.status(403).json({
-                "message" : "incorrect id"
-            })
-        }
+     const share = req.body.share;
+     if (share) {
+         const hash =  random(10)
+          await  models.linkModel.create({
+            userId : req.body.userId,
+            hash : hash  
+        }); 
         res.json({
-            message : "heres your shareable link",
-            shareLink: `https://myapp.com/share/${contentId}`,
-            title: content?.title,
-            type: content?.type
+            "message" : `share${hash}`
         })
-     } catch {
-        res.status(500).json({ message: "something went wrong" });
-     }
+    } else {
+          await  models.linkModel.deleteOne({
+            userId : req.body.userId
+        })
+    } 
+})
+app.get("api/v1/:sharelink", async (req: CustomRequest, res : Response)=>{
+    const hash = req.params.hash
+    const link = await models.linkModel.findOne({
+        hash
+    })
+    if (!link) {
+        res.status(411).json({
+            "message" : "wrong link"
+        })
+        return;
+    }
+    const content = await models.contentModel.findOne({
+        userId : link.userId
+    })
+    const user = await models.userModel.findOne({
+        userId : link.userId
+    })
+    res.json({
+        username : user?.username,
+        content : content
+    })
 })
 
 app.listen(3000, () => {console.log("server started")});

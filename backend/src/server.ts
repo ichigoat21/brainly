@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types } from "mongoose";
 
-const DB_URI = "mongodb+srv://shivsssdiscord:7f89YrPFUMFf3CiV@second-brain.4trgwsy.mongodb.net/";
+const DB_URI = "mongodb+srv://shivresides:XYWrWNrSyWnfM4q2@second-brain.4jq3gmh.mongodb.net/?retryWrites=true&w=majority&appName=second-brain";
 
 
 mongoose.connect(DB_URI)
@@ -19,11 +19,11 @@ const contentSchema = new Schema({
   type: { type: String, enum: contentTypes },
   title: { type: String, required: true },
   tags: [{ type: Types.ObjectId, ref: 'Tag' }],
-  userId: { type: Types.ObjectId, ref: 'User', required: true },
+  userId: { type: Types.ObjectId, ref: 'user', required: true },
 });
 const linkSchema = new Schema({
   hash : String,
-  userId: { type: Types.ObjectId, ref: 'User', required: true },
+  userId: { type: Types.ObjectId, ref: 'user', required: true },
 });
 
 
