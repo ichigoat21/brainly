@@ -19,8 +19,10 @@ const getYouTubeEmbedLink = (url: string) => {
 export const CardComponent = ({title, link, type} : CardProps) => {
     return <div className="p-4 bg-white rounded-md border-gray-200 max-w-96 border">
         <div className="flex justify-between">
-         <div className="flex items-center gap-2 text-gray-500">
-           <ShareIcon size="md"/>
+         <div className="flex items-center gap-2">
+            <div className="text-gray-500">
+            <ShareIcon size="md"/>
+            </div>  
          {title}
          </div>
          <div>
@@ -44,7 +46,7 @@ export const CardComponent = ({title, link, type} : CardProps) => {
     allowFullScreen
     />
     )}
-    {type === "twitter" && <blockquote className="twitter-tweet">
+    {type === "twitter" && <blockquote className="twitter-tweet min-h-72 min-w-48">
      <a href={link.replace("x.com", "twitter.com")}></a>
     </blockquote>}
     </div>

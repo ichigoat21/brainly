@@ -7,7 +7,8 @@ interface ButtonProps  {
       text : string,
       size : "sm" | "md" | "lg",
       startIcon? : ReactElement,
-      endIcon? : ReactElement
+      endIcon? : ReactElement,
+      onclick? : ()=> void
 }
 //button colors : light purple bg , dark purple bg  text white , text-purple 
 
@@ -21,8 +22,8 @@ const sizeStyles = {
     "md" : "px-4 py-2 text-md",
     "lg" : "px-8 py-4 text-lg"
 }
-export const Button = (props : ButtonProps) => { <Button size="md" variant="secondary" text="add"/>
-    return <button className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]}`}>
+export const Button = (props : ButtonProps) => { 
+    return <button onClick={props.onclick} className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]}`}>
         <div className="flex items-center">
           {props.startIcon}
           {props.text}
