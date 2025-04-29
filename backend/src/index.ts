@@ -78,23 +78,19 @@ app.post("/api/v1/delete", userMiddleware, async (req: CustomRequest, res: Respo
     })
 })
 
-app.get("/api/v1/share", async (req: CustomRequest, res: Response) => {
-     const share = req.body.share;
-     if (share) {
-         const hash =  random(10)
-          await  models.linkModel.create({
-            userId : req.body.userId,
-            hash : hash  
-        }); 
-        res.json({
-            "message" : `share${hash}`
-        })
+app.get("/api/v1/share", async (req: Request, res: Response) => {
+    const share = req.query.share;
+    const userId = req.query.userId;
+    if (share) {
+      const hash = random(10);
+      await models.linkModel.create({ userId, hash });
+      res.json({ message: `share${hash}` });
     } else {
-          await  models.linkModel.deleteOne({
-            userId : req.body.userId
-        })
-    } 
-})
+      await models.linkModel.deleteOne({ userId });
+      res.json({ message: "unshared" });
+    }
+  });
+  
 app.get("api/v1/:sharelink", async (req: CustomRequest, res : Response)=>{
     const hash = req.params.hash
     const link = await models.linkModel.findOne({
