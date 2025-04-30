@@ -5,10 +5,12 @@ import { JWT_PASS } from "./config";
 import { CustomRequest } from "./interface";
 import { userMiddleware } from "./middleware";
 import { random } from "./utils";
+import cors from "cors"
 const app = express();
 
-app.use(express.json());
 
+app.use(express.json());
+app.use(cors());
 
 app.post("/api/v1/signup", async (req: Request, res: Response) => {
     const username = req.body.username;
