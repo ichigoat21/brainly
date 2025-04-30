@@ -4,10 +4,13 @@ import { CardComponent } from "./components/card"
 import { PlusIcon } from "./components/icons/PlusIcon"
 import { ShareIcon } from "./components/icons/ShareIcon"
 import { ModalComponent } from "./components/modal"
+import { SideBarComponent } from "./components/sidebar"
 
 const App = () => {
   const [modalOpen, setModelOpen] = useState(false);
   return <div>
+   <SideBarComponent/>
+   <div className="p-4 ml-72 bg-[#f8fafc] min-h-screen">
     <ModalComponent open = {modalOpen} onclick={()=>{
       setModelOpen(false)
     }}/>
@@ -19,9 +22,11 @@ const App = () => {
     <div className="flex">
     <CardComponent title="BAMBIETTA" link="https://youtu.be/jM2r532cMbA?si=JyArbOHpA2b-03us" type="youtube"/>
     <br />
-    <CardComponent title="tweet 1" link="https://x.com/vampivex/status/1916942044963946708" type="twitter"/>
+    <CardComponent title="tweet 1" link="" type="twitter"/>
     </div>
   </div>
+  </div>
+ 
 }
 export default App
 
