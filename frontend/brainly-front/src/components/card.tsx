@@ -29,7 +29,7 @@ export const CardComponent = ({title, link, type} : CardProps) => {
          <div className="flex items-center gap-2 text-gray-500">
          <a href={link} target="_blank">
           <ShareIcon size="md"/> 
-          </a>s
+          </a>
          <ShareIcon size="md"/>
          </div>
         </div>
