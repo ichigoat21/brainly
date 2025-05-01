@@ -49,11 +49,13 @@ app.post("/api/v1/signin", async (req: Request, res: Response) => {
 app.post("/api/v1/contents", userMiddleware, async (req: CustomRequest, res: Response) => {
     const link = req.body.link;
     const title = req.body.title;
+    const type = req.body.type
 
     const content = await models.contentModel.create({
         link : link,
         title : title,
         userId : req.userId,
+        type : type,
         tags : []
     })
     res.json({

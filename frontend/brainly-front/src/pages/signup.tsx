@@ -3,7 +3,7 @@ import { Button } from "../components/button";
 import { InputComponent } from "../components/Input";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
     const usernameRef = useRef<HTMLInputElement | null>(null);
