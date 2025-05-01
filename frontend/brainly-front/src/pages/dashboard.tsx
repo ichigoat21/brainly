@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useDebugValue, useEffect, useState } from "react"
 import { Button } from "../components/button"
 import { CardComponent } from "../components/card"
 import { PlusIcon } from "../components/icons/PlusIcon"
@@ -9,7 +9,11 @@ import { useContent } from "../hooks/useContent"
 
 export const Dashboard = () => {
   const [modalOpen, setModelOpen] = useState(false);
-  const content = useContent()
+  const {content, refresh} = useContent()
+  useEffect (()=> {
+    refresh
+  }, [modalOpen]
+  )
   return <div>
    <SideBarComponent/>
    <div className="p-4 ml-72 bg-[#f8fafc] min-h-screen">
