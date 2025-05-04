@@ -1,4 +1,5 @@
-import express from "express";
+import express, { Request, Response } from "express";
+
 import cors from "cors"
 import userRouter from "./routes/userRouter";
 import contentRouter from "./routes/ContentRouter";

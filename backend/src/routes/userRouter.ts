@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { models } from "mongoose";
 import { Request, Response } from "express";
+import models from "../server"
 import { JWT_PASS } from "../config";
 import jwt from "jsonwebtoken";
 const userRouter = Router()
@@ -8,6 +8,7 @@ const userRouter = Router()
 userRouter.post("/signup", async (req: Request, res: Response) => {
     const username = req.body.username;
     const password = req.body.password;
+    console.log(models.userModel)
     await models.userModel.create({
         username : username,
         password : password

@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { userMiddleware } from "../middleware";
 import { CustomRequest } from "../interface";
-import { Request, Response } from "express";
-import { models } from "mongoose";
+import  {Response } from "express";
+import  models  from "../server";
 import { random } from "../utils";
 
 const contentRouter = Router();
 
-contentRouter.post("/addcontent", userMiddleware, async (req: CustomRequest, res: Response) => {
+contentRouter.post("/add", userMiddleware, async (req: CustomRequest, res: Response) => {
     const link = req.body.link;
     const title = req.body.title;
     const type = req.body.type
