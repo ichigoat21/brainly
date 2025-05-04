@@ -18,7 +18,7 @@ export const SignUp = () => {
                     username,
                     password
             })
-            navigate("/signin")
+            navigate("/dashboard")
   }
   return (
     <div className="h-screen w-screen bg-[#f8fafc] flex justify-center items-center">

@@ -20,7 +20,7 @@ export const Signin = () => {
           })
           const jwt = response.data.token;
           localStorage.setItem("token", jwt)
-          navigate("/dashboard")
+          navigate("/signin")
           ;
 }   return (
   <div className="h-screen w-screen bg-[#f8fafc] flex justify-center items-center">
@@ -33,6 +33,9 @@ export const Signin = () => {
         <InputComponent reference={passwordRef} placeholder="Password" />
         <div className="flex justify-center">
           <Button text="Submit" variant="secondary" size="md" onclick={signin} />
+        </div>
+        <div className="flex justify-center">
+        <h6>Dont have an account? <h6 onClick={()=>{navigate("/signup")}}className="cursor-pointer underline font-blue-700">Sign Up</h6></h6>
         </div>
       </div>
     </div>

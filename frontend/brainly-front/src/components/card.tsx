@@ -1,9 +1,37 @@
+
+
+import axios from "axios";
+import { BACKEND_URL } from "../config";
+import { DeleteIcon } from "./icons/deteteicon";
 import { ShareIcon } from "./icons/ShareIcon"
+
+
+type which = "youtube" | "twitter"
 interface CardProps {
     title : string,
     link : string,
-    type : "youtube" | "twitter"
-}
+    type : which, 
+    ondelete : () => void
+}; 
+const response = await axios.get(`${BACKEND_URL}/api/v1/contents`, {
+  headers : {
+    Authorization: localStorage.getItem("token") || "",
+  }
+});
+console.log(response.data)
+const contentId = response.data.content._id
+const deleteIcon = async () => {
+  
+  console.log("clicked")
+
+    await axios.delete(`${BACKEND_URL}/api/v1/delete/${contentId}`, {
+      headers: {
+        Authorization: localStorage.getItem("token") || "",
+      },
+    });}
+
+
+
 const getYouTubeEmbedLink = (url: string) => {
     try {
       const parsedUrl = new URL(url);
@@ -16,7 +44,8 @@ const getYouTubeEmbedLink = (url: string) => {
       return ""; 
     }
   };
-export const CardComponent = ({title, link, type} : CardProps) => {
+  
+export const CardComponent = ({title, link, type, ondelete} : CardProps) => {
     return <div className="p-3 bg-white rounded-md border border-gray-200 w-80 h-80 overflow-hidden flex flex-col justify-between">
         <div className="flex justify-between">
          <div className="flex items-center gap-2">
@@ -30,9 +59,10 @@ export const CardComponent = ({title, link, type} : CardProps) => {
          <div>
          <div className="flex items-center gap-2 text-gray-500">
          <a href={link} target="_blank">
-          <ShareIcon size="md"/> 
+         <ShareIcon size="md"/> 
           </a>
-         <ShareIcon size="md"/>
+         <div onClick={()=>{deleteIcon()}}  className="cursor-pointer"><DeleteIcon  /> 
+         </div> 
          </div>
         </div>
     </div>
