@@ -1,9 +1,11 @@
 import { Router } from "express";
 import { Request, Response } from "express";
 import models from "../server"
-import { JWT_PASS } from "../config";
 import jwt from "jsonwebtoken";
+import { JWT_SECRET_KEY } from "../config";
+
 const userRouter = Router()
+
 
 userRouter.post("/signup", async (req: Request, res: Response) => {
     const username = req.body.username;
@@ -29,7 +31,7 @@ userRouter.post("/signin", async (req: Request, res: Response) => {
     if (existingUser) {
         const token = jwt.sign({
             id : existingUser._id
-        }, JWT_PASS);
+        }, JWT_SECRET_KEY)
         res.json({
             token
         })

@@ -1,6 +1,10 @@
 import mongoose, { Schema, Types } from "mongoose";
+import dotenv from "dotenv"
 
-const DB_URI = "mongodb+srv://shivresides:XYWrWNrSyWnfM4q2@second-brain.4jq3gmh.mongodb.net/?retryWrites=true&w=majority&appName=second-brain";
+dotenv.config()
+console.log(process.env.MONGO_DB_PASS)
+
+const DB_URI = `mongodb+srv://shivresides:${process.env.MONGO_DB_PASS}@second-brain.4jq3gmh.mongodb.net/?retryWrites=true&w=majority&appName=second-brain`;
 
 
 mongoose.connect(DB_URI)

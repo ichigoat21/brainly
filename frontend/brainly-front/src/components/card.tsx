@@ -13,7 +13,7 @@ interface CardProps {
     type : which, 
     ondelete : () => void
 }; 
-const response = await axios.get(`${BACKEND_URL}/api/v1/contents`, {
+const response = await axios.get(`${BACKEND_URL}/api/v1/content/preview`, {
   headers : {
     Authorization: localStorage.getItem("token") || "",
   }
@@ -30,6 +30,7 @@ const deleteIcon = async () => {
       },
     });}
 
+    
 
 
 const getYouTubeEmbedLink = (url: string) => {

@@ -8,15 +8,14 @@ import { SideBarComponent } from "../components/sidebar"
 import { useContent } from "../hooks/useContent"
 import { refresh } from "../hooks/share"
 import { handleShare } from "../hooks/useShare"
-import { BACKEND_URL } from "../config"
-import axios from "axios"
+
 
 export const Dashboard = () => {
   
   const [modalOpen, setModelOpen] = useState(false);
   const {content, setContent} = useContent()
   useEffect (()=> {
-    refresh("contents", setContent)
+    refresh("/content/preview", setContent)
   }, [modalOpen]
   )
   console.log(content);
