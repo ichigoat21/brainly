@@ -4,6 +4,8 @@ import { CrossIcon } from "./icons/CrossIcon"
 import { InputComponent } from "./Input"
 import axios from "axios"
 import { BACKEND_URL } from "../config"
+import { configDotenv } from "dotenv"
+import { on } from "events"
 
 interface modalProps {
     open : boolean,
@@ -15,15 +17,17 @@ enum ContentType {
 }
 
 export const ModalComponent = ({open, onclick}: modalProps) => {
-    const titleRef = useRef<HTMLInputElement>();
-    const linkRef = useRef<HTMLInputElement>();
+    const titleRef = useRef<HTMLInputElement>(null);
+    const linkRef = useRef<HTMLInputElement>(null);
     const [type, setType] = useState(ContentType.Youtube)
 
      async function addContent() {
-          const title = titleRef.current.value;
-          const link = linkRef.current.value;
+          const title = titleRef.current?.value;
+          const link = linkRef.current?.value;
+          
+
          
-        await  axios.post(`${BACKEND_URL}/api/v1/contents`, {
+        await  axios.post(`${BACKEND_URL}/api/v1/content/add`, {
             title,
             link,
             type
@@ -33,7 +37,7 @@ export const ModalComponent = ({open, onclick}: modalProps) => {
             }
            
           })
-          onclick?.()
+          onclick()
     }
       return <div>
         {open && (
