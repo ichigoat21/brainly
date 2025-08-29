@@ -14,13 +14,13 @@ export const Signin = () => {
          if (!usernameRef.current || !passwordRef.current) return;
           const username = usernameRef.current.value;
           const password = passwordRef.current.value;
-          const response = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
+          const response = await axios.post(`${BACKEND_URL}/api/v1/user/signin`, {
                   username,
                   password
           })
           const jwt = response.data.token;
           localStorage.setItem("token", jwt)
-          navigate("/signin")
+          navigate("/dashboard")
           ;
 }   return (
   <div className="h-screen w-screen bg-[#f8fafc] flex justify-center items-center">

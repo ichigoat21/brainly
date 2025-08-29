@@ -6,7 +6,7 @@ import { ShareIcon } from "../components/icons/ShareIcon"
 import { ModalComponent } from "../components/modal"
 import { SideBarComponent } from "../components/sidebar"
 import { useContent } from "../hooks/useContent"
-import { refresh } from "../hooks/share"
+import { refresh } from "../hooks/useRefresh"
 import { handleShare } from "../hooks/useShare"
 
 
@@ -43,7 +43,6 @@ export const Dashboard = () => {
     title={title}
     link={link}
     type={type as "youtube" | "twitter"}
-    ondelete={() => deleteIcon(_id)}
   />
   ))}
     </div>

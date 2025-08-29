@@ -14,11 +14,11 @@ export const SignUp = () => {
            if (!usernameRef.current || !passwordRef.current) return;
             const username = usernameRef.current.value;
             const password = passwordRef.current.value;
-            await axios.post(`${BACKEND_URL}/api/v1/signup`, {
+            await axios.post(`${BACKEND_URL}/api/v1/user/signup`, {
                     username,
                     password
             })
-            navigate("/dashboard")
+            navigate("/signin")
   }
   return (
     <div className="h-screen w-screen bg-[#f8fafc] flex justify-center items-center">

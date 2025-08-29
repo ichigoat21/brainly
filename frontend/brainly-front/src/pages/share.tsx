@@ -5,7 +5,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useParams } from "react-router-dom";
 
-// Type for content items
+
 interface ContentItem {
   key : number,
   type: string;

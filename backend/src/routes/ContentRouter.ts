@@ -69,7 +69,7 @@ contentRouter.post("/share", userMiddleware,  async (req : CustomRequest, res) =
             })
 
             res.json({
-                message : "hello",
+                message : "Here's your link",
                 hash : hash
             })
     } else {
