@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { response, Router } from "express";
 import { userMiddleware } from "../middleware";
 import { CustomRequest } from "../interface";
 import  {Response } from "express";
@@ -34,15 +34,21 @@ contentRouter.get("/preview", userMiddleware, async (req:  CustomRequest, res: R
         content
     });
 })
-contentRouter.delete("/api/v1/delete/:id", userMiddleware, async (req: CustomRequest, res: Response) => {
-    const contentId = req.params;
-
-    await models.contentModel.deleteMany({
-        contentId,
+contentRouter.delete("/delete/:id", userMiddleware, async (req: CustomRequest, res: Response) => {
+    const contentId = req.params.id;
+    console.log(contentId)
+      
+    const Response = await models.contentModel.deleteOne({
+        _id : contentId,
         userId : req.userId
     })
+    console.log(Response)
+
+    res.status(200).json({
+        message : 'Item Deleted'
+    })
 })
-contentRouter.post("/api/v1/share", userMiddleware,  async (req : CustomRequest, res) => {
+contentRouter.post("/share", userMiddleware,  async (req : CustomRequest, res) => {
     const share = req.body.share;
     if (share) {
             const existingLink = await models.linkModel.findOne({
