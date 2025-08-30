@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { BACKEND_URL } from "../config";
+
+
 import { DeleteIcon } from "./icons/deteteicon";
 import { ShareIcon } from "./icons/ShareIcon";
 
@@ -10,7 +9,7 @@ interface CardProps {
   title: string;
   link: string;
   type: which;
-  ondelete?: () => void;
+  ondelete : () => void;
 }
 
 const getYouTubeEmbedLink = (url: string) => {
@@ -27,49 +26,6 @@ const getYouTubeEmbedLink = (url: string) => {
 };
 
 export const CardComponent = ({ title, link, type, ondelete }: CardProps) => {
-  const [contentId, setContentId] = useState<string | null>(null);
-
-  
-  useEffect(() => {
-    const fetchPreview = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) return;
-
-        const response = await axios.get(
-          `${BACKEND_URL}/api/v1/content/preview`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-
-        setContentId(response.data.content._id);
-        console.log("preview:", response.data);
-      } catch (err) {
-        console.error("Error fetching preview:", err);
-      }
-    };
-
-    fetchPreview();
-  }, []);
-
-  const deleteIcon = async () => {
-    if (!contentId) return;
-
-    try {
-      await axios.delete(`${BACKEND_URL}/api/v1/delete/${contentId}`, {
-        headers: {
-          Authorization: localStorage.getItem("token") || "",
-        },
-      });
-      console.log("Deleted content", contentId);
-      ondelete?.(); // callback to parent if needed
-    } catch (err) {
-      console.error("Delete failed:", err);
-    }
-  };
 
   return (
     <div className="p-3 bg-white rounded-md border border-gray-200 w-80 h-80 overflow-hidden flex flex-col justify-between">
@@ -87,7 +43,7 @@ export const CardComponent = ({ title, link, type, ondelete }: CardProps) => {
             <a href={link} target="_blank">
               <ShareIcon size="md" />
             </a>
-            <div onClick={deleteIcon} className="cursor-pointer">
+            <div onClick={ondelete} className="cursor-pointer">
               <DeleteIcon />
             </div>
           </div>

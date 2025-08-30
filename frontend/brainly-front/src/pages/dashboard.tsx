@@ -31,6 +31,20 @@ export const Dashboard = () => {
     fetchData();
   }, []);
 
+  async function deleteHandler(id : string){
+    try {
+     const response =  await axios.delete(`${BACKEND_URL}/api/v1/content/delete/${id}`, {
+      headers : {
+        Authorization : localStorage.getItem("token")
+      }
+    })
+    console.log(response.data.message)
+    setContent((item) => item.filter(c => c._id !== id))
+  } catch(error) {
+    console.error("Error deleting content", error);
+  }
+  }
+
   return (
     <div>
       <SideBarComponent />
@@ -66,6 +80,7 @@ export const Dashboard = () => {
               title={title}
               link={link}
               type={type}
+              ondelete={() => {deleteHandler(_id)}}
             />
           ))}
         </div>
