@@ -32,7 +32,7 @@ export const Dashboard = () => {
       setContent(response.data.content);
     }
     fetchData();
-  }, []);
+  }, [modalOpen]);
 
   async function deleteHandler(id : string){
     try {

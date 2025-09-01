@@ -21,11 +21,10 @@ export const ShareBoard = () => {
       const response = await axios.get(`${BACKEND_URL}/api/v1/content/${id}`);
       console.log("Fetched:", response.data);
 
-      // If backend returns array
+
       setContent(response.data.content);
 
-      // If backend returns a single object, use:
-      // setContent([response.data.content]);
+
     } catch (error) {
       console.error("Failed to fetch shared content:", error);
     }
