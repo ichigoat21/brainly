@@ -1,6 +1,7 @@
 
 export interface IconProps {
     size : "sm" | "md" | "lg"
+    onclick? : () => void
 }
 
 export const sizeVariants = {

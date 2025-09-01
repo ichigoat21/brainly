@@ -4,8 +4,8 @@ import { CrossIcon } from "./icons/CrossIcon"
 import { InputComponent } from "./Input"
 import axios from "axios"
 import { BACKEND_URL } from "../config"
-import { configDotenv } from "dotenv"
-import { on } from "events"
+
+
 
 interface modalProps {
     open : boolean,
@@ -37,7 +37,7 @@ export const ModalComponent = ({open, onclick}: modalProps) => {
             }
            
           })
-          onclick()
+        
     }
       return <div>
         {open && (
@@ -71,8 +71,10 @@ export const ModalComponent = ({open, onclick}: modalProps) => {
           size="sm"
         />
       </div>
-      <div className="flex justify-center">
-        <Button onclick={addContent} size="md" text="Submit" variant="secondary" />
+      <div onClick={onclick} className="flex justify-center">
+        <Button onclick={()=> {
+          addContent()
+          }} size="md" text="Submit" variant="secondary" />
       </div>
     </div>
   </div>

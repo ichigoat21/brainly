@@ -9,7 +9,7 @@ interface CardProps {
   title: string;
   link: string;
   type: which;
-  ondelete : () => void;
+  ondelete? : () => void;
 }
 
 const getYouTubeEmbedLink = (url: string) => {

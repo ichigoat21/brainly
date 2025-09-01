@@ -82,7 +82,7 @@ contentRouter.post("/share", userMiddleware,  async (req : CustomRequest, res) =
         })
     }
 });
-contentRouter.get("/api/v1/:sharelink", async (req: CustomRequest, res : Response)=>{
+contentRouter.get("/:sharelink", async (req: CustomRequest, res : Response)=>{
     const hash = req.params.hash
     const link = await models.linkModel.findOne({
         hash

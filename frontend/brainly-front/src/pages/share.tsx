@@ -16,6 +16,7 @@ interface ContentItem {
 export const ShareBoard = () => {
   const [content, setContent] = useState<ContentItem[]>([]);
   const { id } = useParams<{ id: string }>()
+  console.log({id})
   async function fetchContent() {
     try {
       const response = await axios.get(`${BACKEND_URL}/api/v1/${id}`,{
