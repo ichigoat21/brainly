@@ -82,7 +82,7 @@ contentRouter.post("/share", userMiddleware,  async (req : CustomRequest, res) =
         })
     }
 });
-contentRouter.get("/:sharelink", async (req: CustomRequest, res : Response)=>{
+contentRouter.get("/:hash", async (req: CustomRequest, res : Response)=>{
     const hash = req.params.hash
     const link = await models.linkModel.findOne({
         hash
@@ -93,9 +93,8 @@ contentRouter.get("/:sharelink", async (req: CustomRequest, res : Response)=>{
         })
         return;
     }
-    const content = await models.contentModel.findOne({
-        userId : link.userId
-    })
+    const content = await models.contentModel.find({ userId: link.userId });
+
     const user = await models.userModel.findOne({
         userId : link.userId
     })

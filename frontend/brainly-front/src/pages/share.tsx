@@ -5,9 +5,8 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useParams } from "react-router-dom";
 
-
 interface ContentItem {
-  key : number,
+  _id: string;
   type: string;
   title: string;
   link: string;
@@ -15,32 +14,41 @@ interface ContentItem {
 
 export const ShareBoard = () => {
   const [content, setContent] = useState<ContentItem[]>([]);
-  const { id } = useParams<{ id: string }>()
-  console.log({id})
+  const { id } = useParams<{ id: string }>();
+
   async function fetchContent() {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/v1/${id}`,{
-      });
-      console.log(id)
-      setContent([response.data.content]);
+      const response = await axios.get(`${BACKEND_URL}/api/v1/content/${id}`);
+      console.log("Fetched:", response.data);
+
+      // If backend returns array
+      setContent(response.data.content);
+
+      // If backend returns a single object, use:
+      // setContent([response.data.content]);
     } catch (error) {
       console.error("Failed to fetch shared content:", error);
     }
-  } 
- 
-    useEffect(()=>{
-      fetchContent()
-    }, [])
-     
-    
+  }
+
+  useEffect(() => {
+    if (id) fetchContent();
+  }, [id]);
 
   return (
     <div>
       <SideBarComponent />
       <div className="p-4 ml-72 bg-[#f8fafc] min-h-screen">
         <br />
-        <div className="flex gap-4 flex-wrap">
-          {content.map(({key, type, title, link})=> <CardComponent key={key} title={title} link={link} type={type as "youtube" | "twitter"}/> )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {content.map(({ _id, type, title, link }) => (
+            <CardComponent
+              key={_id}
+              title={title}
+              link={link}
+              type={type as "youtube" | "twitter"}
+            />
+          ))}
         </div>
       </div>
     </div>
